@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>테트리스</title>
+    <style>
+*{
+    margin:0;
+    padding:0;
+
+}
+ul {
+    list-style: none;
+}
+body{
+    height: 100%;
+}
+.board{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.score{
+    font-size: 36px;
+    margin-bottom: 2rem;
+}
+.level{
+    font-size: 36px;
+    margin-bottom: 2rem;
+}
+.gamepad{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.savepoint{
+    margin-left:50px;
+    width: 75px;
+    height: 100px;
+}
+.savepoint > ul{
+    border: 1px solid #333;
+    width: 75px;
+    height: 100px;
+    margin: 0 auto;
+}
+.savepoint > ul > li{
+    width: 100%;
+    height: 25px;
+}
+.savepoint > ul > li > ul{
+    display: flex;
+}
+.savepoint > ul > li > ul > li{
+    width: 25px;
+    height: 25px;
+    outline: 1px solid #ccc;
+}
+.playground{
+    margin-left: 150px;
+    width: 250px;
+    height: 500px;
+    justify-self: center;
+}
+.playground > ul{
+    border: 1px solid #333;
+    margin: 0 auto;
+}
+.playground > ul > li{
+    width: 100%;
+    height: 25px;
+}
+.playground > ul > li > ul{
+    display: flex;
+}
+.playground > ul > li > ul > li{
+    width: 25px;
+    height: 25px;
+    outline: 1px solid #ccc;
+}
+.oh{
+    background: coral;
+    border-radius: 6px;
+}
+.nemo{
+    background: cornflowerblue;
+    border-radius: 6px;
+}
+.bar{
+    background: darkblue;
+    border-radius: 6px;
+}
+.elLeft{
+    background: pink;
+    border-radius: 6px;
+}
+.zee{
+    background: silver;
+    border-radius: 6px;
+}
+.anizee{
+    background: red;
+    border-radius: 6px;
+}
+.elRight{
+    background-color: lightblue;
+    border-radius: 6px;
+}
+
+.game-text {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    font-size: 50px;
+}
+.cong-text {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    font-size: 50px;
+}
+    </style>
+</head>
+<body>
+    <iframe width="1" height="1" src="https://www.youtube.com/embed/Br2K_L0cqpk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <div class="wrapper">
+        <div class="game-text">게임종료</div>
+        <div class="cong-text">축하합니다</div>
+        <div class="board">
+            <div class="score">점수: 0</div>
+            <div class="level">레벨: 1</div>
+            </div>
+    </div>
+    <div class="gamepad">
+        <div class="playground">
+            <ul><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li><li><ul class="line"><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ul></li></ul>
+        </div>
+        <div class="savepoint"><ul><li><ul><li></li><li></li><li></li></ul></li><li><ul><li></li><li></li><li></li></ul></li><li><ul><li></li><li></li><li></li></ul></li><li><ul><li></li><li></li><li></li></ul></li></ul></div>                
+    </div>
+</body>
+    <script>
+
+// DOM
+
+const playground = document.querySelector(".playground > ul");
+const gameText = document.querySelector(".game-text")
+const congText = document.querySelector(".cong-text")
+const scoreDisplay = document.querySelector(".score")
+const LevelDisplay = document.querySelector(".level")
+const line = document.querySelector(".line")
+const Savepoint = document.querySelector(".savepoint > ul")
+
+// Setting
+const GAME_ROWS = 20;
+const GAME_COLS = 10;
+const SAVE_ROWS = 4;
+const SAVE_COLS = 3;
+
+// variavles
+let Level = 1;
+let score = 0;
+let duration = 500;
+let downInterval;
+let tempMovingItem;
+let rest = 0
+
+const BLOCKS = {
+    oh: [
+        [[0,0],[0,1],[1,1],[0,2]],
+        [[0,0],[1,0],[2,0],[1,1]],
+        [[0,1],[1,0],[1,1],[1,2]],
+        [[1,0],[0,1],[1,1],[2,1]],
+        ],
+    nemo: [
+        [[0,0],[0,1],[1,0],[1,1]],
+        [[0,0],[0,1],[1,0],[1,1]],
+        [[0,0],[0,1],[1,0],[1,1]],
+        [[0,0],[0,1],[1,0],[1,1]],
+        ],
+    bar: [
+        [[0,0],[0,1],[0,2],[0,3]],
+        [[0,0],[1,0],[2,0],[3,0]],
+        [[0,0],[0,1],[0,2],[0,3]],
+        [[0,0],[1,0],[2,0],[3,0]],
+        ],
+    zee: [
+        [[0,0],[1,0],[1,1],[2,1]],
+        [[1,0],[1,1],[0,1],[0,2]],
+        [[0,0],[1,0],[1,1],[2,1]],
+        [[1,0],[1,1],[0,1],[0,2]],
+        ],
+    elLeft: [
+        [[0,0],[0,1],[0,2],[1,2]],
+        [[0,0],[1,0],[2,0],[0,1]],
+        [[0,0],[1,0],[1,1],[1,2]],
+        [[2,0],[0,1],[1,1],[2,1]],
+        ],
+    anizee: [
+        [[0,1],[1,1],[1,0],[2,0]],
+        [[0,0],[0,1],[1,1],[1,2]],
+        [[0,1],[1,1],[1,0],[2,0]],
+        [[0,0],[0,1],[1,1],[1,2]],
+        ],
+    elRight: [
+        [[1,0],[1,1],[1,2],[0,2]],
+        [[0,0],[0,1],[1,1],[2,1]],
+        [[0,0],[1,0],[0,1],[0,2]],
+        [[0,0],[1,0],[2,0],[2,1]],
+        ]
+}
+
+const movingItem = {
+    type: "",
+    direction: 3,
+    top: 0,
+    left: 4,
+};
+
+const savedItem ={
+    type: "",
+    direction: 3,
+    top: 0,
+    left: 4,
+}
+
+init()
+
+// functions
+function init(){
+    generateNewBlock()
+    generateSaveBlock()
+}
+
+function generateNewBlock() {
+    clearInterval(downInterval);
+downInterval = setInterval(()=>{
+    moveBlock('top',1)
+},duration)
+const saveNode = document.querySelectorAll(".saved")
+console.log(saveNode)
+if(!saveNode.length==0){
+    tempMovingItem = tempsavedItem
+    renderBlocks()
+}
+else{
+    const blockArray = Object.entries(BLOCKS);
+const randomIndex = Math.floor(Math.random()* blockArray.length)
+movingItem.type = blockArray[randomIndex][0]
+movingItem.top = 0;
+movingItem.left = 4;
+movingItem.direction = 0;
+tempMovingItem = {...movingItem};
+renderBlocks()
+}
+}
+
+function generateSaveBlock() {
+const blockArray = Object.entries(BLOCKS);
+const randomIndex = Math.floor(Math.random()* blockArray.length)
+savedItem.type = blockArray[randomIndex][0]
+savedItem.top = 0;
+savedItem.left = 4;
+savedItem.direction = 0;
+tempsavedItem = {...savedItem};
+renderSaveBlocks()
+}
+
+
+function renderSaveBlocks() {
+    const { type, direction, top, left } = tempsavedItem;
+    BLOCKS[type][direction].some(sblock=> {
+    const sx = sblock[0]
+    const sy = sblock[1]
+    const starget = Savepoint.childNodes[sy].childNodes[0].childNodes[sx]
+    starget.classList.add(type, "saved")
+    })
+}
+
+function prependSaveLine() {
+    const li = document.createElement("li");
+    const ul = document.createElement("ul");
+    for(let j=0; j<SAVE_COLS; j++) {
+        const matrix = document.createElement("li");
+        ul.prepend(matrix);
+    }
+    li.prepend(ul)
+    Savepoint.prepend(li)
+}
+
+
+function renderBlocks(moveType = ""){
+    const { type, direction, top, left } = tempMovingItem;
+    const movingBlocks = document.querySelectorAll(".moving");
+    movingBlocks.forEach(moving => {
+        moving.classList.remove(type, "moving");
+    })
+    BLOCKS[type][direction].some(block=> {
+       const x = block[0] + left;
+       const y = block[1] + top;
+       const target = playground.childNodes[y] ? playground.childNodes[y].childNodes[0].childNodes[x] : null;
+       const isAvailable = checkEmpty(target);
+       if(isAvailable) {
+           target.classList.add(type, "moving")
+       } else {
+           tempMovingItem = { ...movingItem }
+           if(moveType ==='retry'){
+               clearInterval(downInterval);
+               showcongText()
+           }
+           setTimeout(() => {
+               renderBlocks('retry')
+               if(moveType === "top") {
+                   seizeBlock();
+               }
+           }, 0)
+           return true;
+       }
+    })
+    movingItem.type = type;
+    movingItem.left = left;
+    movingItem.top = top;
+    movingItem.direction = direction;
+}
+
+function prependNewLine() {
+    const li = document.createElement("li");
+    const ul = document.createElement("ul");
+    for(let j=0; j<GAME_COLS; j++) {
+        const matrix = document.createElement("li");
+        ul.prepend(matrix);
+    }
+    li.prepend(ul)
+    playground.prepend(li)
+}
+
+
+function seizeBlock() {
+
+    const movingBlocks = document.querySelectorAll(".moving");
+    movingBlocks.forEach(moving => {
+        moving.classList.remove("moving");
+        moving.classList.add("seized");
+    })
+    checkMatch()
+}
+ function checkMatch() {
+    
+    congText.style.display= "none";
+    const childNodes = playground.childNodes;
+    childNodes.forEach(child => {
+        let matched = true;
+        child.children[0].childNodes.forEach(function(li) {
+            if (!li.classList.contains("seized")) {
+                matched = false;
+            }
+        })
+        if (matched) {
+            child.remove();
+            prependNewLine()
+            score += 10;
+            scoreDisplay.innerText = `점수: ${(Level-1)*100+score}`;
+        }
+    })
+    NextLevel()
+}
+
+
+function NextLevel() {
+    if(score > 95) {
+        showcongText()
+    }
+    else {    
+    generateNewBlock()
+    const schildNodes = Savepoint.childNodes;
+    schildNodes.forEach(child => {
+            child.remove();
+            prependSaveLine()
+        })
+    generateSaveBlock();
+    }
+}
+
+function checkEmpty(target){
+    if(!target || target.classList.contains("seized")) {
+        return false;
+    }
+    return true;
+}
+function moveBlock(moveType, amount) {
+    tempMovingItem[moveType] += amount;
+    renderBlocks(moveType)
+}
+function changeDirection(){
+    const direction = tempMovingItem.direction;
+    direction === 3 ? tempMovingItem.direction = 0 : tempMovingItem.direction +=1;
+    renderBlocks()
+}
+function dropBlock(){
+    clearInterval(downInterval);
+    downInterval = setInterval(()=>{
+        moveBlock("top",1)
+    },10)
+}
+function showcongText(){
+    if(score > 95) {
+    congText.style.display= "flex";
+     gameMatch()
+    }
+    else {
+    gameText.style.display= "flex"
+    }}
+
+ function gameMatch() {  
+    score = 0;
+    Level++;
+    scoreDisplay.innerText = `점수: ${(Level-1)*100+score}`;
+    LevelDisplay.innerText = `레벨: ${Level}`;
+    duration -= 75
+    const childNodes = playground.childNodes;
+    childNodes.forEach(child => {
+            child.remove();
+            prependNewLine()
+        })
+        const schildNodes = Savepoint.childNodes;
+    schildNodes.forEach(child => {
+            child.remove();
+            prependSaveLine()
+        })
+        generateNewBlock()
+        generateSaveBlock()
+        pauseGame()
+    }
+function pauseGame() {
+    clearInterval(downInterval);
+    rest = 1
+}
+function resumeGame(){
+    clearInterval(downInterval);
+    downInterval = setInterval(()=>{
+        moveBlock("top",1)
+    },duration)
+    rest = 0
+}
+// event handling
+document.addEventListener("keydown", e => {
+    switch (e.keyCode) {
+        case 39:
+            moveBlock("left", 1);
+            break;
+        case 37:
+            moveBlock("left", -1);
+            break;
+        case 40:
+            moveBlock("top", 1);
+            break;
+        case 38:
+            changeDirection();
+            break;
+        case 32:
+            dropBlock();
+            break;
+        case 13:
+            if(rest===0) {
+                pauseGame();
+            break;}
+            else {
+                resumeGame();
+                break;
+            }
+        default:
+            break;
+    }
+        })
+    </script>
+</body>
+</html>
