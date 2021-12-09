@@ -45,8 +45,8 @@
                 <li>
                     <ul>
                         <li id="one" onclick="num1()">1</li>
-                        <li id="two"onclick="num2()">2</li>
-                        <li id="three"onclick="num3()">3</li>
+                        <li id="two" onclick="num2()">2</li>
+                        <li id="three" onclick="num3()">3</li>
                         <li id="plus" onclick="Plus()">+</li>
                     </ul>
                 </li>
