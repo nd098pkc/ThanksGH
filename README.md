@@ -1,4 +1,5 @@
 <body>
+    <link rel="stylesheet" href="java.css">
     <nav class="table">
         <div class="result"></div>
         <div class="buttons">
